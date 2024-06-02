@@ -54,3 +54,25 @@ fn control_flying_sound(
         }
     }
 }
+
+fn control_bgm(
+    actions: Res<Actions>,
+    audio: Res<FlyingAudio>,
+    mut audio_instances: ResMut<Assets<AudioInstance>>,
+) {
+    if let Some(instance) = audio_instances.get_mut(&audio.0) {
+        match instance.state() {
+            PlaybackState::Paused { .. } => {
+                if actions.player_movement.is_some() {
+                    instance.resume(AudioTween::default());
+                }
+            }
+            PlaybackState::Playing { .. } => {
+                if actions.player_movement.is_none() {
+                    instance.pause(AudioTween::default());
+                }
+            }
+            _ => {}
+        }
+    }
+}
