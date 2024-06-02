@@ -1,7 +1,7 @@
 use bevy::math::Vec3Swizzles;
 use bevy::prelude::*;
 
-use crate::actions::game_control::{get_movement, GameControl};
+use crate::game::game_control::{get_movement, GameControl};
 use crate::player::Player;
 use crate::GameState;
 
@@ -15,10 +15,12 @@ pub struct ActionsPlugin;
 // Actions can then be used as a resource in other systems to act on the player input.
 impl Plugin for ActionsPlugin {
     fn build(&self, app: &mut App) {
-        app.init_resource::<Actions>().add_systems(
-            Update,
-            set_movement_actions.run_if(in_state(GameState::Playing)),
-        );
+        app
+            .init_resource::<Actions>()
+            .add_systems(
+                Update,
+                set_movement_actions.run_if(in_state(GameState::Playing)),
+            );
     }
 }
 
