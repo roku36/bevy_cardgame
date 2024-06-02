@@ -118,7 +118,7 @@ fn setup_menu(mut commands: Commands, textures: Res<TextureAssets>) {
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(
-                        "Made with Bevy",
+                        "Mawith Bevy",
                         TextStyle {
                             font_size: 15.0,
                             color: Color::rgb(0.9, 0.9, 0.9),
