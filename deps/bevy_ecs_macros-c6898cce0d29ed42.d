@@ -1,0 +1,10 @@
+/home/runner/work/bevy_cardgame/bevy_cardgame/target/release/deps/libbevy_ecs_macros-c6898cce0d29ed42.so: /home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/lib.rs /home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/component.rs /home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/query_data.rs /home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/query_filter.rs /home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/states.rs /home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/world_query.rs
+
+/home/runner/work/bevy_cardgame/bevy_cardgame/target/release/deps/bevy_ecs_macros-c6898cce0d29ed42.d: /home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/lib.rs /home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/component.rs /home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/query_data.rs /home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/query_filter.rs /home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/states.rs /home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/world_query.rs
+
+/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/lib.rs:
+/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/component.rs:
+/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/query_data.rs:
+/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/query_filter.rs:
+/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/states.rs:
+/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.2/src/world_query.rs:
