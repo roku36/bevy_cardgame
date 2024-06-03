@@ -26,6 +26,7 @@ struct FlyingAudio(Handle<AudioInstance>);
 fn start_audio(mut commands: Commands, audio_assets: Res<AudioAssets>, audio: Res<Audio>) {
     audio.pause();
     let handle = audio
+        // .play(audio_assets.lava.clone())
         .play(audio_assets.flying.clone())
         .looped()
         .with_volume(0.3)
