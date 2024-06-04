@@ -13,7 +13,7 @@ impl Plugin for CardUiPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_systems(OnEnter(GameState::Playing), spawn_card)
-            .add_systems(Update, update_card.run_if(in_state(GameState::Playing)));
+            .add_systems(Update, card_system.run_if(in_state(GameState::Playing)));
     }
 }
 
@@ -53,6 +53,7 @@ fn spawn_card(mut commands: Commands, textures: Res<TextureAssets>) {
                             height: Val::Px(300.0),
                             ..Default::default()
                         },
+                        border_color: Color::WHITE.into(),
                         ..Default::default()
                     })
                     .insert(Card);
@@ -60,19 +61,23 @@ fn spawn_card(mut commands: Commands, textures: Res<TextureAssets>) {
         });
 }
 
-fn update_card(
-    time: Res<Time>,
-    mut player_query: Query<&mut Transform, With<Card>>,
+fn card_system(
+    mut commands: Commands,
+    mut interaction_query: Query<(Entity, &Interaction, &mut Style), (Changed<Interaction>, With<Card>)>,
 ) {
+    for (entity, interaction, mut style) in &mut interaction_query {
+        match *interaction {
+            Interaction::Pressed => {
+                // use card
+                commands.entity(entity).despawn_recursive();
 
-}
-
-fn hover_effect_card(
-    mut materials: ResMut<Assets<ColorMaterial>>,
-    mut interaction_query: Query<
-    (&Interaction, &mut Handle<ColorMaterial>),
-    (Changed<Interaction>, With<Button>),
-    >,
-) {
-
+            }
+            Interaction::Hovered => {
+                style.border = UiRect::all(Val::Px(2.));
+            }
+            Interaction::None => {
+                style.border = UiRect::all(Val::Px(0.));
+            }
+        }
+    }
 }
