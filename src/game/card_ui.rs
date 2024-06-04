@@ -15,25 +15,19 @@ pub struct Card;
 impl Plugin for CardUiPlugin {
     fn build(&self, app: &mut App) {
         app
-            .add_systems(OnEnter(GameState::Playing), spawn_card)
+            .add_systems(OnEnter(GameState::Playing), setup)
             .add_systems(Update, card_system.run_if(in_state(GameState::Playing)));
     }
 }
 
-fn spawn_card(mut commands: Commands, textures: Res<TextureAssets>) {
-    // commands
-    //     .spawn(SpriteBundle {
-    //         texture: textures.card1.clone(),
-    //         // transform: Transform::from_translation(Vec3::new(0., 0., 1.)),
-    //         transform: Transform {
-    //             scale: Vec3::splat(0.3),
-    //             ..Default::default()
-    //         },
-    //         ..Default::default()
-    //     })
-    //     .insert(Card);
+fn setup(mut commands: Commands, textures: Res<TextureAssets>) {
+    let deck_entity = spawn_deck(&mut commands);
+    for _ in 0..5 {
+        draw_cards(&mut commands, deck_entity, &textures);
+    }
+}
 
-
+fn spawn_deck(commands: &mut Commands) -> Entity {
     commands
         .spawn(NodeBundle {
             style: Style {
@@ -43,26 +37,28 @@ fn spawn_card(mut commands: Commands, textures: Res<TextureAssets>) {
                 justify_content: JustifyContent::Center,
                 ..default()
             },
-            // background_color: Color::DARK_GREEN.into(),
             ..default()
         })
-        .with_children(|parent| {
-            for _ in 0..5 {
-                parent
-                    .spawn(ButtonBundle {
-                        image: textures.card1.clone().into(),
-                        style: Style {
-                            width: Val::Px(200.0),
-                            height: Val::Px(300.0),
-                            ..Default::default()
-                        },
-                        border_color: Color::WHITE.into(),
-                        ..Default::default()
-                    })
-                    .insert(Card);
-            }
-        });
+        .id()
 }
+
+fn draw_cards(commands: &mut Commands, deck_entity: Entity, textures: &Res<TextureAssets>) {
+    commands.entity(deck_entity).with_children(|parent| {
+        parent
+            .spawn(ButtonBundle {
+                image: textures.card1.clone().into(),
+                style: Style {
+                    width: Val::Px(200.0),
+                    height: Val::Px(300.0),
+                    ..Default::default()
+                },
+                border_color: Color::WHITE.into(),
+                ..Default::default()
+            })
+            .insert(Card);
+    });
+}
+
 
 fn card_system(
     mut commands: Commands,
