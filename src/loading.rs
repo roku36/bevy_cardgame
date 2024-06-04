@@ -13,6 +13,7 @@ impl Plugin for LoadingPlugin {
         app.add_loading_state(
             LoadingState::new(GameState::Loading)
                 .continue_to_state(GameState::Menu)
+                // .continue_to_state(GameState::Playing)
                 .load_collection::<AudioAssets>()
                 .load_collection::<TextureAssets>(),
         );
@@ -26,8 +27,8 @@ impl Plugin for LoadingPlugin {
 pub struct AudioAssets {
     #[asset(path = "audio/flying.ogg")]
     pub flying: Handle<AudioSource>,
-    // #[asset(path = "audio/lava.wav")]
-    // pub lava: Handle<AudioSource>,
+    #[asset(path = "audio/lava.ogg")]
+    pub lava: Handle<AudioSource>,
 }
 
 #[derive(AssetCollection, Resource)]
@@ -36,4 +37,16 @@ pub struct TextureAssets {
     pub bevy: Handle<Image>,
     #[asset(path = "textures/github.png")]
     pub github: Handle<Image>,
+    #[asset(path = "textures/card.png")]
+    pub card1: Handle<Image>,
+    #[asset(path = "textures/card.png")]
+    pub card2: Handle<Image>,
+    #[asset(path = "textures/card.png")]
+    pub card3: Handle<Image>,
+    #[asset(path = "textures/card.png")]
+    pub card4: Handle<Image>,
+    #[asset(path = "textures/card.png")]
+    pub card5: Handle<Image>,
+    #[asset(path = "textures/card.png")]
+    pub card6: Handle<Image>,
 }
