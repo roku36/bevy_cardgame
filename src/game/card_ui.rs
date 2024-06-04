@@ -1,5 +1,8 @@
-use crate::loading::TextureAssets;
-use crate::GameState;
+use crate::{
+    loading::TextureAssets,
+    GameState,
+    HP,
+};
 use bevy::prelude::*;
 
 pub struct CardUiPlugin;
@@ -64,13 +67,14 @@ fn spawn_card(mut commands: Commands, textures: Res<TextureAssets>) {
 fn card_system(
     mut commands: Commands,
     mut interaction_query: Query<(Entity, &Interaction, &mut Style), (Changed<Interaction>, With<Card>)>,
+    mut hp: ResMut<HP>,
 ) {
     for (entity, interaction, mut style) in &mut interaction_query {
         match *interaction {
             Interaction::Pressed => {
                 // use card
+                hp.0 -= 1;
                 commands.entity(entity).despawn_recursive();
-
             }
             Interaction::Hovered => {
                 style.border = UiRect::all(Val::Px(2.));
@@ -81,3 +85,4 @@ fn card_system(
         }
     }
 }
+

@@ -15,6 +15,9 @@ use bevy::app::App;
 use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 use bevy::prelude::*;
 
+#[derive(Resource, Clone, Copy, Debug)]
+pub struct HP(u32, u32);
+
 // This example game uses States to separate logic
 // See https://bevy-cheatbook.github.io/programming/states.html
 // Or https://github.com/bevyengine/bevy/blob/main/examples/ecs/state.rs
@@ -33,7 +36,10 @@ pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
-        app.init_state::<GameState>().add_plugins((
+        app
+            .init_state::<GameState>()
+            .insert_resource(HP(100, 100))
+            .add_plugins((
             LoadingPlugin,
             MenuPlugin,
             ActionsPlugin,
