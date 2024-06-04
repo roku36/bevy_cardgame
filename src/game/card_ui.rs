@@ -59,7 +59,6 @@ fn draw_cards(commands: &mut Commands, deck_entity: Entity, textures: &Res<Textu
     });
 }
 
-
 fn card_system(
     mut commands: Commands,
     mut interaction_query: Query<(Entity, &Interaction, &mut Style), (Changed<Interaction>, With<Card>)>,
