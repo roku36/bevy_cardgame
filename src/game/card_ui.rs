@@ -10,24 +10,32 @@ pub struct CardUiPlugin;
 #[derive(Component)]
 pub struct Card;
 
+#[derive(Component)]
+pub struct Deck;
+
+#[derive(Event)]
+pub struct DrawCardEvent;
+
+
 /// This plugin handles player related stuff like movement
 /// Player logic is only active during the State `GameState::Playing`
 impl Plugin for CardUiPlugin {
     fn build(&self, app: &mut App) {
         app
+            .add_event::<DrawCardEvent>()
             .add_systems(OnEnter(GameState::Playing), setup)
-            .add_systems(Update, card_system.run_if(in_state(GameState::Playing)));
+            .add_systems(Update, (
+                card_system.run_if(in_state(GameState::Playing)),
+                draw_cards.run_if(in_state(GameState::Playing)),
+            ));
     }
 }
 
-fn setup(mut commands: Commands, textures: Res<TextureAssets>) {
-    let deck_entity = spawn_deck(&mut commands);
-    for _ in 0..5 {
-        draw_cards(&mut commands, deck_entity, &textures);
-    }
-}
-
-fn spawn_deck(commands: &mut Commands) -> Entity {
+fn setup(
+    mut commands: Commands,
+    mut ev_draw_card: EventWriter<DrawCardEvent>,
+) {
+    // spawning deck
     commands
         .spawn(NodeBundle {
             style: Style {
@@ -39,24 +47,37 @@ fn spawn_deck(commands: &mut Commands) -> Entity {
             },
             ..default()
         })
-        .id()
+        .insert(Deck);
+
+    for _ in 0..9 {
+        ev_draw_card.send(DrawCardEvent);
+    }
 }
 
-fn draw_cards(commands: &mut Commands, deck_entity: Entity, textures: &Res<TextureAssets>) {
-    commands.entity(deck_entity).with_children(|parent| {
-        parent
-            .spawn(ButtonBundle {
-                image: textures.card1.clone().into(),
-                style: Style {
-                    width: Val::Px(200.0),
-                    height: Val::Px(300.0),
+fn draw_cards(
+    mut commands: Commands,
+    textures: Res<TextureAssets>,
+    deck_query: Query<Entity, With<Deck>>,
+    mut ev_draw_card: EventReader<DrawCardEvent>,
+
+) {
+    for _ in ev_draw_card.read() {
+        let deck_entity = deck_query.single();
+        commands.entity(deck_entity).with_children(|parent| {
+            parent
+                .spawn(ButtonBundle {
+                    image: textures.card1.clone().into(),
+                    style: Style {
+                        width: Val::Px(200.0),
+                        height: Val::Px(300.0),
+                        ..Default::default()
+                    },
+                    border_color: Color::WHITE.into(),
                     ..Default::default()
-                },
-                border_color: Color::WHITE.into(),
-                ..Default::default()
-            })
-            .insert(Card);
-    });
+                })
+                .insert(Card);
+        });
+    }
 }
 
 fn card_system(
