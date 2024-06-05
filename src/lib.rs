@@ -5,7 +5,7 @@ mod audio;
 mod loading;
 mod menu;
 
-use crate::game::ActionsPlugin;
+use crate::game::GamePlugin;
 use crate::audio::InternalAudioPlugin;
 use crate::loading::LoadingPlugin;
 use crate::menu::MenuPlugin;
@@ -57,9 +57,9 @@ enum GameState {
     Menu,
 }
 
-pub struct GamePlugin;
+pub struct MainPlugin;
 
-impl Plugin for GamePlugin {
+impl Plugin for MainPlugin {
     fn build(&self, app: &mut App) {
         app
             .init_state::<GameState>()
@@ -67,7 +67,7 @@ impl Plugin for GamePlugin {
             .add_plugins((
             LoadingPlugin,
             MenuPlugin,
-            ActionsPlugin,
+            GamePlugin,
             InternalAudioPlugin,
         ));
 

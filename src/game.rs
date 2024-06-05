@@ -14,14 +14,13 @@ use crate::{
 mod game_control;
 mod card_ui;
 
-pub struct ActionsPlugin;
+pub struct GamePlugin;
 
 // This plugin listens for keyboard input and converts the input into Actions
 // Actions can then be used as a resource in other systems to act on the player input.
-impl Plugin for ActionsPlugin {
+impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
         app
-            .init_resource::<Actions>()
             .add_plugins((
                 CardUiPlugin,
                 EguiPlugin,
@@ -34,11 +33,6 @@ impl Plugin for ActionsPlugin {
                 )
             );
     }
-}
-
-#[derive(Default, Resource)]
-pub struct Actions {
-    pub player_movement: Option<Vec2>,
 }
 
 fn update_score_ui(mut contexts: EguiContexts, hp: Res<HP>) {
