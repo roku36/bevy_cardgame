@@ -37,8 +37,8 @@ impl Plugin for GamePlugin {
 }
 
 fn update_score_ui(mut contexts: EguiContexts, hp: Res<HP>) {
-    let p1_hp = hp.values.get(&HandleId(true)).unwrap_or(&0);
-    let p2_hp = hp.values.get(&HandleId(false)).unwrap_or(&0);
+    let p1_hp = hp.values.get(&HandleId(0)).unwrap_or(&0);
+    let p2_hp = hp.values.get(&HandleId(1)).unwrap_or(&0);
 
     egui::Area::new("hp")
         .anchor(Align2::CENTER_CENTER, (0., 25.))

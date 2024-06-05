@@ -46,7 +46,7 @@ fn setup(
             },
             ..default()
         })
-        .insert(Deck(HandleId(false)));
+        .insert(Deck(HandleId(0)));
 
     commands
         .spawn(NodeBundle {
@@ -59,12 +59,12 @@ fn setup(
             },
             ..default()
         })
-        .insert(Deck(HandleId(true)));
+        .insert(Deck(HandleId(1)));
 
 
     for _ in 0..5 {
-        ev_draw_card.send(DrawCardEvent(HandleId(false)));
-        ev_draw_card.send(DrawCardEvent(HandleId(true)));
+        ev_draw_card.send(DrawCardEvent(HandleId(0)));
+        ev_draw_card.send(DrawCardEvent(HandleId(1)));
     }
 }
 
@@ -129,8 +129,6 @@ fn play_card(
         match ev.0.cardtype {
             CardType::Heal => {
                 hp.increase(HandleId(opponent_id), 3);
-                // heal my_id
-                // write here
             }
             CardType::Attack => {
                 hp.decrease(HandleId(opponent_id), 2);

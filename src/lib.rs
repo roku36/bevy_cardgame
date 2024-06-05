@@ -18,7 +18,7 @@ use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 use bevy::prelude::*;
 
 #[derive(PartialEq, Clone, Copy, Component, Eq, Hash)]
-pub struct HandleId(bool);
+pub struct HandleId(usize);
 
 #[derive(Resource, Clone)]
 pub struct HP {
@@ -28,8 +28,8 @@ pub struct HP {
 impl HP {
     fn new() -> Self {
         let mut values = HashMap::new();
-        values.insert(HandleId(true), 100); // プレイヤーの初期HP
-        values.insert(HandleId(false), 100); // 対戦相手の初期HP
+        values.insert(HandleId(0), 100); // プレイヤーの初期HP
+        values.insert(HandleId(1), 100); // 対戦相手の初期HP
         HP { values }
     }
 
