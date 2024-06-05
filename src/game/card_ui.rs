@@ -16,18 +16,6 @@ use bevy::prelude::*;
 
 pub struct CardUiPlugin;
 
-
-// impl Distribution<CardType> for Standard {
-//     fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> CardType {
-//         match rng.gen_range(0..=3) {
-//             0 => CardType::Heal,
-//             1 => CardType::Attack,
-//             2 => CardType::Accelerate,
-//             _ => CardType::Charge,
-//         }
-//     }
-// }
-
 impl Plugin for CardUiPlugin {
     fn build(&self, app: &mut App) {
         app
@@ -135,12 +123,17 @@ fn play_card(
     mut hp: ResMut<HP>,
 ) {
     for ev in ev_play_card.read() {
+        let my_id = ev.0.handleid.0;
+        let opponent_id = !my_id;
+
         match ev.0.cardtype {
             CardType::Heal => {
-                hp.0 += 1;
+                hp.increase(HandleId(opponent_id), 3);
+                // heal my_id
+                // write here
             }
             CardType::Attack => {
-                hp.1 -= 1;
+                hp.decrease(HandleId(opponent_id), 2);
             }
             CardType::Accelerate => {}
             CardType::Charge => {}

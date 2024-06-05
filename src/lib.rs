@@ -1,5 +1,7 @@
 #![allow(clippy::type_complexity)]
 
+use std::collections::HashMap;
+
 mod game;
 mod audio;
 mod loading;
@@ -15,8 +17,34 @@ use bevy::app::App;
 use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 use bevy::prelude::*;
 
-#[derive(Resource, Clone, Copy, Debug)]
-pub struct HP(u32, u32);
+#[derive(PartialEq, Clone, Copy, Component, Eq, Hash)]
+pub struct HandleId(bool);
+
+#[derive(Resource, Clone)]
+pub struct HP {
+    values: HashMap<HandleId, i32>,
+}
+
+impl HP {
+    fn new() -> Self {
+        let mut values = HashMap::new();
+        values.insert(HandleId(true), 100); // プレイヤーの初期HP
+        values.insert(HandleId(false), 100); // 対戦相手の初期HP
+        HP { values }
+    }
+
+    fn increase(&mut self, id: HandleId, amount: i32) {
+        if let Some(hp) = self.values.get_mut(&id) {
+            *hp += amount;
+        }
+    }
+
+    fn decrease(&mut self, id: HandleId, amount: i32) {
+        if let Some(hp) = self.values.get_mut(&id) {
+            *hp -= amount;
+        }
+    }
+}
 
 #[derive(Clone, Copy)]
 pub enum CardType {
@@ -25,9 +53,6 @@ pub enum CardType {
     Accelerate,
     Charge,
 }
-
-#[derive(PartialEq, Clone, Copy, Component)]
-pub struct HandleId(bool);
 
 #[derive(Component, Clone, Copy)]
 pub struct Card {
@@ -65,7 +90,7 @@ impl Plugin for MainPlugin {
     fn build(&self, app: &mut App) {
         app
             .init_state::<GameState>()
-            .insert_resource(HP(100, 100))
+            .insert_resource(HP::new())
             .add_plugins((
             LoadingPlugin,
             MenuPlugin,
