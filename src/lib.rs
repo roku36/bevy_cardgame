@@ -18,6 +18,27 @@ use bevy::prelude::*;
 #[derive(Resource, Clone, Copy, Debug)]
 pub struct HP(u32, u32);
 
+#[derive(Clone, Copy)]
+pub enum CardType {
+    Heal,
+    Attack,
+    Accelerate,
+    Charge,
+}
+
+#[derive(Component)]
+pub struct Card(CardType);
+
+#[derive(Component)]
+pub struct Deck;
+
+#[derive(Event)]
+pub struct DrawCardEvent;
+
+#[derive(Event)]
+pub struct PlayCardEvent(CardType);
+
+
 // This example game uses States to separate logic
 // See https://bevy-cheatbook.github.io/programming/states.html
 // Or https://github.com/bevyengine/bevy/blob/main/examples/ecs/state.rs

@@ -1,4 +1,4 @@
-use crate::game::{set_movement_actions, Actions};
+use crate::game::Actions;
 use crate::loading::AudioAssets;
 use crate::GameState;
 use bevy::prelude::*;
@@ -17,7 +17,6 @@ impl Plugin for InternalAudioPlugin {
                     start_bgm
                         .run_if(in_state(GameState::Playing)),
                     control_flying_sound
-                        .after(set_movement_actions)
                         .run_if(in_state(GameState::Playing)),
                 )
             );

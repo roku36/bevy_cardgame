@@ -41,14 +41,6 @@ pub struct Actions {
     pub player_movement: Option<Vec2>,
 }
 
-pub fn set_movement_actions(
-    mut commands: Commands,
-    mut actions: ResMut<Actions>,
-    keyboard_input: Res<ButtonInput<KeyCode>>,
-    camera: Query<(&Camera, &GlobalTransform), With<Camera2d>>,
-) {
-}
-
 fn update_score_ui(mut contexts: EguiContexts, hp: Res<HP>) {
     let HP(p1_hp, p2_hp) = *hp;
 
