@@ -5,6 +5,7 @@ use crate::{
     loading::TextureAssets,
     GameState,
     HP,
+    HandleId,
     CardType,
     Card,
     Deck,
@@ -57,7 +58,7 @@ fn setup(
             },
             ..default()
         })
-        .insert(Deck { handle_id: 0});
+        .insert(Deck(HandleId(false)));
 
     commands
         .spawn(NodeBundle {
@@ -70,12 +71,12 @@ fn setup(
             },
             ..default()
         })
-        .insert(Deck { handle_id: 1});
+        .insert(Deck(HandleId(true)));
 
 
     for _ in 0..5 {
-        ev_draw_card.send(DrawCardEvent { handle_id: 0 });
-        ev_draw_card.send(DrawCardEvent { handle_id: 1 });
+        ev_draw_card.send(DrawCardEvent(HandleId(false)));
+        ev_draw_card.send(DrawCardEvent(HandleId(true)));
     }
 }
 
@@ -86,7 +87,7 @@ fn draw_cards(
     mut ev_draw_card: EventReader<DrawCardEvent>,
 ) {
     for event in ev_draw_card.read() {
-        if let Some((deck_entity, _)) = deck_query.iter().find(|(_, deck)| deck.handle_id == event.handle_id) {
+        if let Some((deck_entity, _)) = deck_query.iter().find(|(_, deck)| deck.0 == event.0) {
             // generate random card type
             let card_type = CardType::Heal;
             commands.entity(deck_entity).with_children(|parent| {

@@ -29,15 +29,14 @@ pub enum CardType {
 #[derive(Component)]
 pub struct Card(CardType);
 
+#[derive(PartialEq, Component)]
+pub struct HandleId(bool);
+
 #[derive(Component)]
-pub struct Deck {
-    pub handle_id: usize,
-}
+pub struct Deck(HandleId);
 
 #[derive(Event)]
-pub struct DrawCardEvent {
-    pub handle_id: usize,
-}
+pub struct DrawCardEvent(HandleId);
 
 #[derive(Event)]
 pub struct PlayCardEvent(CardType);
