@@ -87,7 +87,7 @@ fn draw_cards(
     mut ev_draw_card: EventReader<DrawCardEvent>,
 ) {
     for event in ev_draw_card.read() {
-        if let Some((deck_entity, _)) = deck_query.iter().find(|(_, deck)| deck.0 == event.0) {
+        if let Some((deck_entity, deck)) = deck_query.iter().find(|(_, deck)| deck.0 == event.0) {
             // generate random card type
             let card_type = CardType::Heal;
             commands.entity(deck_entity).with_children(|parent| {
@@ -102,7 +102,7 @@ fn draw_cards(
                         border_color: Color::WHITE.into(),
                         ..Default::default()
                     })
-                    .insert(Card(card_type));
+                    .insert(Card{ cardtype: card_type, handleid: deck.0 });
             });
         }
     }
@@ -118,7 +118,7 @@ fn card_system(
             Interaction::Pressed => {
                 // use card
                 commands.entity(entity).despawn_recursive();
-                ev_play_card.send(PlayCardEvent(card.0));
+                ev_play_card.send(PlayCardEvent(card.clone()));
             }
             Interaction::Hovered => {
                 style.border = UiRect::all(Val::Px(2.));
@@ -135,7 +135,7 @@ fn play_card(
     mut hp: ResMut<HP>,
 ) {
     for ev in ev_play_card.read() {
-        match ev.0 {
+        match ev.0.cardtype {
             CardType::Heal => {
                 hp.0 += 1;
             }

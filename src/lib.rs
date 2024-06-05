@@ -26,11 +26,14 @@ pub enum CardType {
     Charge,
 }
 
-#[derive(Component)]
-pub struct Card(CardType);
-
-#[derive(PartialEq, Component)]
+#[derive(PartialEq, Clone, Copy, Component)]
 pub struct HandleId(bool);
+
+#[derive(Component, Clone, Copy)]
+pub struct Card {
+    cardtype: CardType,
+    handleid: HandleId,
+}
 
 #[derive(Component)]
 pub struct Deck(HandleId);
@@ -39,7 +42,7 @@ pub struct Deck(HandleId);
 pub struct DrawCardEvent(HandleId);
 
 #[derive(Event)]
-pub struct PlayCardEvent(CardType);
+pub struct PlayCardEvent(Card);
 
 
 // This example game uses States to separate logic
