@@ -45,7 +45,7 @@ fn update_score_ui(mut contexts: EguiContexts, hp: Res<HP>) {
     let HP(p1_hp, p2_hp) = *hp;
 
     egui::Area::new("hp")
-        .anchor(Align2::CENTER_TOP, (0., 25.))
+        .anchor(Align2::CENTER_CENTER, (0., 25.))
         .show(contexts.ctx_mut(), |ui| {
             ui.label(
                 RichText::new(format!("{p1_hp} - {p2_hp}"))

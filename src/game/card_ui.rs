@@ -57,37 +57,53 @@ fn setup(
             },
             ..default()
         })
-        .insert(Deck);
+        .insert(Deck { handle_id: 0});
+
+    commands
+        .spawn(NodeBundle {
+            style: Style {
+                width: Val::Percent(100.0),
+                height: Val::Percent(100.0),
+                align_items: AlignItems::FlexStart,
+                justify_content: JustifyContent::Center,
+                ..default()
+            },
+            ..default()
+        })
+        .insert(Deck { handle_id: 1});
+
 
     for _ in 0..5 {
-        ev_draw_card.send(DrawCardEvent);
+        ev_draw_card.send(DrawCardEvent { handle_id: 0 });
+        ev_draw_card.send(DrawCardEvent { handle_id: 1 });
     }
 }
 
 fn draw_cards(
     mut commands: Commands,
     textures: Res<TextureAssets>,
-    deck_query: Query<Entity, With<Deck>>,
+    deck_query: Query<(Entity, &Deck), With<Deck>>,
     mut ev_draw_card: EventReader<DrawCardEvent>,
 ) {
-    for _ in ev_draw_card.read() {
-        let deck_entity = deck_query.single();
-        // generate random card type
-        let card_type = CardType::Heal;
-        commands.entity(deck_entity).with_children(|parent| {
-            parent
-                .spawn(ButtonBundle {
-                    image: textures.heal.clone().into(),
-                    style: Style {
-                        width: Val::Px(200.0),
-                        height: Val::Px(300.0),
+    for event in ev_draw_card.read() {
+        if let Some((deck_entity, _)) = deck_query.iter().find(|(_, deck)| deck.handle_id == event.handle_id) {
+            // generate random card type
+            let card_type = CardType::Heal;
+            commands.entity(deck_entity).with_children(|parent| {
+                parent
+                    .spawn(ButtonBundle {
+                        image: textures.heal.clone().into(),
+                        style: Style {
+                            width: Val::Px(200.0),
+                            height: Val::Px(300.0),
+                            ..Default::default()
+                        },
+                        border_color: Color::WHITE.into(),
                         ..Default::default()
-                    },
-                    border_color: Color::WHITE.into(),
-                    ..Default::default()
-                })
-                .insert(Card(card_type));
-        });
+                    })
+                    .insert(Card(card_type));
+            });
+        }
     }
 }
 

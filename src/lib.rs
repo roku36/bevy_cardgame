@@ -30,10 +30,14 @@ pub enum CardType {
 pub struct Card(CardType);
 
 #[derive(Component)]
-pub struct Deck;
+pub struct Deck {
+    pub handle_id: usize,
+}
 
 #[derive(Event)]
-pub struct DrawCardEvent;
+pub struct DrawCardEvent {
+    pub handle_id: usize,
+}
 
 #[derive(Event)]
 pub struct PlayCardEvent(CardType);
