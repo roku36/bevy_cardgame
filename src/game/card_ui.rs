@@ -128,7 +128,7 @@ fn play_card(
 
         match ev.0.cardtype {
             CardType::Heal => {
-                hp.increase(HandleId(opponent_id), 3);
+                hp.increase(HandleId(my_id), 3);
             }
             CardType::Attack => {
                 hp.decrease(HandleId(opponent_id), 2);
