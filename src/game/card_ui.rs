@@ -77,11 +77,25 @@ fn draw_cards(
     for event in ev_draw_card.read() {
         if let Some((deck_entity, deck)) = deck_query.iter().find(|(_, deck)| deck.0 == event.0) {
             // generate random card type
-            let card_type = CardType::Heal;
+            let card_type = match rand::thread_rng().gen_range(0..4) {
+                0 => CardType::Heal,
+                1 => CardType::Attack,
+                2 => CardType::Accelerate,
+                3 => CardType::Power,
+                _ => unreachable!(),
+            };
+
+            let card_texture = match card_type {
+                CardType::Heal => textures.heal.clone(),
+                CardType::Attack => textures.attack.clone(),
+                CardType::Accelerate => textures.accelerate.clone(),
+                CardType::Power => textures.power.clone(),
+            };
+
             commands.entity(deck_entity).with_children(|parent| {
                 parent
                     .spawn(ButtonBundle {
-                        image: textures.heal.clone().into(),
+                        image: card_texture.into(),
                         style: Style {
                             width: Val::Px(200.0),
                             height: Val::Px(300.0),
@@ -124,7 +138,7 @@ fn play_card(
 ) {
     for ev in ev_play_card.read() {
         let my_id = ev.0.handleid.0;
-        let opponent_id = !my_id;
+        let opponent_id = if my_id == 0 { 1 } else { 0 };
 
         match ev.0.cardtype {
             CardType::Heal => {
@@ -134,7 +148,7 @@ fn play_card(
                 hp.decrease(HandleId(opponent_id), 2);
             }
             CardType::Accelerate => {}
-            CardType::Charge => {}
+            CardType::Power => {}
         }
     }
 }

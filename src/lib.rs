@@ -51,7 +51,7 @@ pub enum CardType {
     Heal,
     Attack,
     Accelerate,
-    Charge,
+    Power,
 }
 
 #[derive(Component, Clone, Copy)]
