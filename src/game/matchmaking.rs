@@ -7,8 +7,12 @@ use crate::{
     game::card_ui::CardUiPlugin,
     AppState,
     HandleId,
-    Card,
     HP,
+    game::{
+        components::{
+            Card,
+        }
+    }
 };
 
 pub struct MatchMakingPlugin;

@@ -15,6 +15,8 @@ use crate::{
 mod game_control;
 mod card_ui;
 mod matchmaking;
+mod components;
+mod events;
 
 pub struct GamePlugin;
 

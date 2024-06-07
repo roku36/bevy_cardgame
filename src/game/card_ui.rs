@@ -7,11 +7,19 @@ use crate::{
     HP,
     HandleId,
     CardType,
-    Card,
-    Deck,
-    PlayCardEvent,
-    DrawCardEvent,
+    game::{
+        events::{
+            PlayCardEvent,
+            DrawCardEvent,
+        },
+        components::{
+            Card,
+            Deck,
+        }
+
+    }
 };
+
 use bevy::prelude::*;
 
 pub struct CardUiPlugin;

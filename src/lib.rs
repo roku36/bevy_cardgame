@@ -54,21 +54,6 @@ pub enum CardType {
     Power,
 }
 
-#[derive(Component, Clone, Copy)]
-pub struct Card {
-    cardtype: CardType,
-    handleid: HandleId,
-}
-
-#[derive(Component)]
-pub struct Deck(HandleId);
-
-#[derive(Event)]
-pub struct DrawCardEvent(HandleId);
-
-#[derive(Event)]
-pub struct PlayCardEvent(Card);
-
 
 // This example game uses States to separate logic
 // See https://bevy-cheatbook.github.io/programming/states.html
