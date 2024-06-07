@@ -49,7 +49,7 @@ image = { version = "0.24", default-features = false }
 # bevy_egui = "0.27.1"
 bevy_egui = "0.25"
 bevy_ggrs = "0.15.0"
-bevy_matchbox = "0.9.0"
+bevy_matchbox = { version = "0.9", features = ["ggrs"] }
 rand_xoshiro = "0.6.0"
 bevy_roll_safe = "0.2.0"
 

@@ -3,7 +3,7 @@ use rand::Rng;
 
 use crate::{
     loading::TextureAssets,
-    GameState,
+    AppState,
     HP,
     HandleId,
     CardType,
@@ -21,11 +21,11 @@ impl Plugin for CardUiPlugin {
         app
             .add_event::<DrawCardEvent>()
             .add_event::<PlayCardEvent>()
-            .add_systems(OnEnter(GameState::Playing), setup)
+            .add_systems(OnEnter(AppState::Playing), setup)
             .add_systems(Update, (
-                card_system.run_if(in_state(GameState::Playing)),
-                draw_cards.run_if(in_state(GameState::Playing)),
-                play_card.run_if(in_state(GameState::Playing)),
+                card_system.run_if(in_state(AppState::Playing)),
+                draw_cards.run_if(in_state(AppState::Playing)),
+                play_card.run_if(in_state(AppState::Playing)),
             ));
     }
 }

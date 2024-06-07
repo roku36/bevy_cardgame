@@ -1,4 +1,3 @@
-use bevy::math::Vec3Swizzles;
 use bevy::prelude::*;
 use bevy_egui::{
     egui::{self, Align2, Color32, FontId, RichText},
@@ -7,13 +6,15 @@ use bevy_egui::{
 
 use crate::{
     game::card_ui::CardUiPlugin,
-    GameState,
+    game::matchmaking::MatchMakingPlugin,
+    AppState,
     HandleId,
     HP,
 };
 
 mod game_control;
 mod card_ui;
+mod matchmaking;
 
 pub struct GamePlugin;
 
@@ -25,12 +26,12 @@ impl Plugin for GamePlugin {
             .add_plugins((
                 CardUiPlugin,
                 EguiPlugin,
+                MatchMakingPlugin,
             ))
             .add_systems(
                 Update,
                 (
-                    // set_movement_actions.run_if(in_state(GameState::Playing)),
-                    update_score_ui.run_if(in_state(GameState::Playing)),
+                    update_score_ui.run_if(in_state(AppState::Playing)),
                 )
             );
     }

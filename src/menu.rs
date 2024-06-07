@@ -1,5 +1,5 @@
 use crate::loading::TextureAssets;
-use crate::GameState;
+use crate::AppState;
 use bevy::prelude::*;
 
 pub struct MenuPlugin;
@@ -9,9 +9,9 @@ pub struct MenuPlugin;
 impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
         app
-            .add_systems(OnEnter(GameState::Menu), setup_menu)
-            .add_systems(Update, click_play_button.run_if(in_state(GameState::Menu)))
-            .add_systems(OnExit(GameState::Menu), cleanup_menu);
+            .add_systems(OnEnter(AppState::Menu), setup_menu)
+            .add_systems(Update, click_play_button.run_if(in_state(AppState::Menu)))
+            .add_systems(OnExit(AppState::Menu), cleanup_menu);
     }
 }
 
@@ -67,7 +67,7 @@ fn setup_menu(mut commands: Commands, textures: Res<TextureAssets>) {
                         ..Default::default()
                     },
                     button_colors,
-                    ChangeState(GameState::Playing),
+                    ChangeState(AppState::Playing),
                 ))
                 .with_children(|parent| {
                     parent.spawn(TextBundle::from_section(
@@ -177,13 +177,13 @@ fn setup_menu(mut commands: Commands, textures: Res<TextureAssets>) {
 }
 
 #[derive(Component)]
-struct ChangeState(GameState);
+struct ChangeState(AppState);
 
 #[derive(Component)]
 struct OpenLink(&'static str);
 
 fn click_play_button(
-    mut next_state: ResMut<NextState<GameState>>,
+    mut next_state: ResMut<NextState<AppState>>,
     mut interaction_query: Query<
         (
             &Interaction,

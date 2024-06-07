@@ -1,7 +1,7 @@
 use bevy::asset::AssetMetaCheck;
 use bevy::prelude::*;
 use bevy::DefaultPlugins;
-use bevy_game::MainPlugin; // ToDo: Replace bevy_game with your new crate name.
+use bevy_game::AppPlugin; // ToDo: Replace bevy_game with your new crate name.
 
 fn main() {
     App::new()
@@ -16,6 +16,6 @@ fn main() {
                 }),
                 ..default()
             }))
-        .add_plugins(MainPlugin)
+        .add_plugins(AppPlugin)
         .run();
 }
